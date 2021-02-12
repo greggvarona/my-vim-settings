@@ -17,12 +17,19 @@ call plug#end()
 filetype on
 filetype plugin on
 
+" :CocInstall coc-go
 augroup go_settings
 	autocmd FileType go source ~/go-settings.vim
 augroup end
 
+" :CocInstall coc-tsserver
 augroup ts_settings
 	autocmd FileType typescript source ~/ts-settings.vim
+augroup end
+
+" :CocInstall coc-phpls
+augroup php_settings
+	autocmd FileType php source ~/php-settings.vim
 augroup end
 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
@@ -51,20 +58,22 @@ function! LightlineFilename()
 endfunction
 
 " COC
-	inoremap <silent><expr> <TAB>
-	  \ pumvisible() ? coc#_select_confirm() :
-	  \ coc#expandableOrJumpable() ?
-	  \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-	  \ <SID>check_back_space() ? "\<TAB>" :
-	  \ coc#refresh()
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? coc#_select_confirm() :
+  \ coc#expandableOrJumpable() ?
+  \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ coc#refresh()
 
-	function! s:check_back_space() abort
-	  let col = col('.') - 1
-	  return !col || getline('.')[col - 1]  =~# '\s'
-	endfunction
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-	let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_next = '<tab>'
 
+" swap files
+set directory=~/.vim/swap-files,~/tmp,.
 
 " misc
 set wrap!
